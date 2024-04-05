@@ -82,7 +82,11 @@ class ImportSobj(bpy.types.Operator, ImportHelper):
         pass
 
     def execute(self, context):
-        addon_prefs = context.preferences.addons["mhworld_tool_suite"].preferences
+        candidate_modules = [mod for mod in addon_utils.modules() if mod.bl_info["name"] == "MHWorld tool suite"]
+        if len(candidate_modules) > 1:
+            logger.warning("Inconsistencies while loading the addon preferences: make sure you don't have multiple versions of the addon installed.")
+        mod = candidate_modules[0]
+        addon_prefs = context.preferences.addons[mod.__name__].preferences
         SetLoggingLevel(addon_prefs.logging_level)
 
         folder = (os.path.dirname(self.filepath))
@@ -180,7 +184,11 @@ class ImportSobjl(bpy.types.Operator, ImportHelper):
         pass
 
     def execute(self, context):
-        addon_prefs = context.preferences.addons["mhworld_tool_suite"].preferences
+        candidate_modules = [mod for mod in addon_utils.modules() if mod.bl_info["name"] == "MHWorld tool suite"]
+        if len(candidate_modules) > 1:
+            logger.warning("Inconsistencies while loading the addon preferences: make sure you don't have multiple versions of the addon installed.")
+        mod = candidate_modules[0]
+        addon_prefs = context.preferences.addons[mod.__name__].preferences
         SetLoggingLevel(addon_prefs.logging_level)
 
         folder = (os.path.dirname(self.filepath))
