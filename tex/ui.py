@@ -1,6 +1,7 @@
 import bpy
 from bpy.types import Panel
 from bpy_extras.io_utils import ImportHelper, ExportHelper
+import addon_utils
 
 import os
 
