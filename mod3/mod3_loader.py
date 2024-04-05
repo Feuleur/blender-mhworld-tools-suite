@@ -183,11 +183,14 @@ def load_mod3(filepath, collection=None, LOD=0, fix_rotation=False, fix_scale=Fa
 
             bpy.context.view_layer.objects.active = obj
 
-            mesh.create_normals_split()
+            if hasattr(mesh, 'create_normals_split'):
+                mesh.create_normals_split()
             mesh.polygons.foreach_set("use_smooth", [True]*len(mesh.polygons))
             mesh.normals_split_custom_set_from_vertices(mesh_data["normals"])
-            mesh.use_auto_smooth = True
-            mesh.free_normals_split()
+            if hasattr(mesh, 'use_auto_smooth'):
+                mesh.use_auto_smooth = True
+            if hasattr(mesh, 'free_normals_split'):
+                mesh.free_normals_split()
 
             if "weights_names" in mesh_data.keys() and "weights_values" in mesh_data.keys():
                 used_bones = []
