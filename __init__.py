@@ -1,7 +1,7 @@
 bl_info = {
     "name": "MHWorld tool suite",
     "blender": (3, 6, 0),
-    "version": (1, 3, 4),
+    "version": (1, 3, 5),
     "category": "Import-Export",
 }
 
