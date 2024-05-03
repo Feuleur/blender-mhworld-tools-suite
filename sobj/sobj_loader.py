@@ -228,6 +228,9 @@ def load_sobj(game_path, filepath, LOD=0, mesh_cache={}, mesh_hashes={}, use_png
             },
             "material_suffix":"_whi"
         },
+        "gm064_200":{
+            "model_swap":"gm064_000",
+        },
 
     }
 
