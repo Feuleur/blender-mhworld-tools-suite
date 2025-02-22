@@ -1,7 +1,7 @@
 bl_info = {
     "name": "MHWorld tool suite",
     "blender": (3, 6, 0),
-    "version": (1, 3, 7),
+    "version": (1, 3, 9),
     "category": "Import-Export",
 }
 
@@ -15,6 +15,11 @@ import numpy as np
 import logging
 logger = logging.getLogger("mhworld_import")
 import sys
+
+#from .ipr.ipr_loader import load_ipr
+#from .mod3.mod3_loader import load_mod3
+#from .mrl3.mrl3_loader import load_mrl3
+#from .tex.tex_loader import load_tex
 
 from .ipr.ui import IMPORT_PT_BkiprSettingPanel_1
 from .ipr.ui import IMPORT_PT_BkiprSettingPanel_2
@@ -106,15 +111,23 @@ class CustomAddonPreferences(bpy.types.AddonPreferences):
         layout.prop(self, "logging_level")
 
 
-def menu_func_import(self, context):
-    self.layout.operator(ImportBkipr.bl_idname, text="MHWorld bulk map instance object files (.bkipr)", icon="WORLD_DATA")
-    self.layout.operator(ImportIpr.bl_idname, text="MHWorld map instance object files (.ipr)", icon="WORLD_DATA")
-    self.layout.operator(ImportSdl.bl_idname, text="MHWorld map static object files (.sdl)", icon="WORLD_DATA")
-    self.layout.operator(ImportSobjl.bl_idname, text="MHWorld bulk map interactible object files (.sobjl)", icon="WORLD_DATA")
-    self.layout.operator(ImportSobj.bl_idname, text="MHWorld map interactible object files (.sobj)", icon="WORLD_DATA")
-    self.layout.operator(ImportMod3.bl_idname, text="MHWorld model files (.mod3)", icon="MESH_DATA")
-    self.layout.operator(ImportTex.bl_idname, text="MHWorld texture files (.tex)", icon="TEXTURE_DATA")
-    self.layout.operator(ImportLmt.bl_idname, text="MHWorld animation files (.lmt)", icon="ANIM_DATA")
+class WORLD_import_menu(bpy.types.Menu):
+    bl_label = "Monster Hunter World"
+    bl_idname = "WORLD_MT_menu_import"
+
+    def draw(self, context):
+        self.layout.operator(ImportBkipr.bl_idname, text="Bulk map instance object files (.bkipr)", icon="WORLD_DATA")
+        self.layout.operator(ImportIpr.bl_idname, text="Map instance object files (.ipr)", icon="WORLD_DATA")
+        self.layout.operator(ImportSdl.bl_idname, text="Map static object files (.sdl)", icon="WORLD_DATA")
+        self.layout.operator(ImportSobjl.bl_idname, text="Bulk map interactible object files (.sobjl)", icon="WORLD_DATA")
+        self.layout.operator(ImportSobj.bl_idname, text="Map interactible object files (.sobj)", icon="WORLD_DATA")
+        self.layout.operator(ImportMod3.bl_idname, text="Model files (.mod3)", icon="MESH_DATA")
+        self.layout.operator(ImportTex.bl_idname, text="Texture files (.tex)", icon="TEXTURE_DATA")
+        self.layout.operator(ImportLmt.bl_idname, text="Animation files (.lmt)", icon="ANIM_DATA")
+
+
+def WORLD_menu_func_import(self, context):
+    self.layout.menu(WORLD_import_menu.bl_idname)
 
 def register():
     bpy.utils.register_class(ImportBkipr)
@@ -141,7 +154,8 @@ def register():
     bpy.utils.register_class(IMPORT_PT_TexSettingPanel_1)
     bpy.utils.register_class(IMPORT_PT_TexSettingPanel_2)
     bpy.utils.register_class(IMPORT_PT_LmtSettingPanel_1)
-    bpy.types.TOPBAR_MT_file_import.append(menu_func_import)
+    bpy.utils.register_class(WORLD_import_menu)
+    bpy.types.TOPBAR_MT_file_import.append(WORLD_menu_func_import)
     pass
 
 def unregister():
@@ -169,6 +183,7 @@ def unregister():
     bpy.utils.unregister_class(IMPORT_PT_TexSettingPanel_1)
     bpy.utils.unregister_class(IMPORT_PT_TexSettingPanel_2)
     bpy.utils.unregister_class(IMPORT_PT_LmtSettingPanel_1)
-    bpy.types.TOPBAR_MT_file_import.remove(menu_func_import)
+    bpy.utils.unregister_class(WORLD_import_menu)
+    bpy.types.TOPBAR_MT_file_import.remove(WORLD_menu_func_import)
     pass
 

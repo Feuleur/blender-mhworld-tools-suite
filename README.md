@@ -4,8 +4,6 @@ This blender addon provides a suite of file importers for Monster Hunter World f
 
 ## Prerequisites
 
-Tested for blender 3.6+, however a breaking change is coming for blender 4.1 related to normals import. The addon will be updated when it happens.
-
 This addon is independant, and doesn't require external tools to work. Textures are imported using compiled code, whose shared libraries were tested for Windows and Ubuntu 22.04. Further platforms can be supported by compiling the code, following the steps further bellow.
 
 Game files are normally stored in archives, which can be extracted by following the steps described in [this tool](https://www.nexusmods.com/monsterhunterworld/mods/6).

@@ -283,8 +283,10 @@ def load_mrl3(game_path, filepath, mod3_mat_hashes={}, use_loaded_mat=False, use
                 #nodes["Material Output"].location = Vector((500.0, 300.0))
 
             #if mat_values["has_alpha"]:
+
             mat.blend_method = "HASHED"
-            mat.shadow_method = "HASHED"
+            if hasattr(mat, 'shadow_method'):
+                mat.shadow_method = "HASHED"
             #mat.use_screen_refraction = True
         
         returned_mats.append(mat)
